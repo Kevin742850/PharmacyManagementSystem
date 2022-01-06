@@ -14,10 +14,9 @@ export class AuthenticationService {
   Authenticate(signInData: SignInData): boolean {
     this.http.post(this.inspectionAPIURL + '/ValidUsers/', signInData).subscribe(res => {
       if (res != null) {
-        debugger;
-        this.isAuth = true;     
-        
-        localStorage.setItem('userToken', res.toString() );
+        this.isAuth = true;
+
+        localStorage.setItem('userToken', res.toString());
         this.router.navigate(['showInspection']);
       }
       else {
@@ -34,6 +33,6 @@ export class AuthenticationService {
 
   }
   getToken() {
-     return  localStorage.getItem('userToken');
+    return localStorage.getItem('userToken');
   }
 }
