@@ -10,24 +10,30 @@ export class AuthenticationService {
 
   readonly inspectionAPIURL = "https://localhost:7191/api";
   isAuth: boolean = false;
-  constructor(private http: HttpClient,private router:Router) { }
-  Authenticate(signInData: SignInData):boolean {
+  constructor(private http: HttpClient, private router: Router) { }
+  Authenticate(signInData: SignInData): boolean {
     this.http.post(this.inspectionAPIURL + '/ValidUsers/', signInData).subscribe(res => {
       if (res != null) {
-        this.isAuth = true;
+        debugger;
+        this.isAuth = true;     
+        
+        localStorage.setItem('userToken', res.toString() );
         this.router.navigate(['showInspection']);
       }
       else {
         this.isAuth = false;
-      }      
+      }
     });
     return this.isAuth;
   }
-   
-  Logout()
-  {
-this.isAuth=false;
-this.router.navigate(['']);
 
+  Logout() {
+    this.isAuth = false;
+    localStorage.clear();
+    this.router.navigate(['']);
+
+  }
+  getToken() {
+     return  localStorage.getItem('userToken');
   }
 }

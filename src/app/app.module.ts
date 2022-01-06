@@ -1,5 +1,5 @@
-import {HttpClientModule} from '@angular/common/http';
-import {FormsModule,ReactiveFormsModule} from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -10,7 +10,7 @@ import { ShowInspectionComponent } from './Inspection/show-inspection/show-inspe
 import { UpsertInspectionComponent } from './Inspection/upsert-inspection/upsert-inspection.component';
 import { InspectionServiceService } from './inspection-service.service';
 import { LoginComponent } from './login/login.component';
-
+import { TokenInterceptorService } from './service/Interceptor/token-interceptor.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +26,11 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [InspectionServiceService],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

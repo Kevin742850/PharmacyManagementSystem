@@ -14,7 +14,8 @@ export class ApplicationGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if(this.auth.isAuth)
+      debugger;
+      if( localStorage.getItem('userToken'))
       {
         return true;
       }
