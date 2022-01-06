@@ -2,13 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { SignInData } from 'src/app/model/signInData';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
-  readonly inspectionAPIURL = "https://localhost:7191/api";
+  readonly inspectionAPIURL = environment.apiURL;
   isAuth: boolean = false;
   constructor(private http: HttpClient, private router: Router) { }
   Authenticate(signInData: SignInData): boolean {
