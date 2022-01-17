@@ -16,6 +16,7 @@ import { UpsertCustomerComponent } from './customer/upsert-customer/upsert-custo
 import { NgxPaginationModule } from 'ngx-pagination';
 import { HttpErrorInterceptorService } from './service/Interceptor/http-error-interceptor.service';
 import { AlertifyService } from './service/Alertify/alertify.service';
+import { FooterComponent } from './footer/footer.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +25,8 @@ import { AlertifyService } from './service/Alertify/alertify.service';
     UpsertInspectionComponent,
     LoginComponent,
     CustomerComponent,
-    UpsertCustomerComponent 
+    UpsertCustomerComponent,
+    FooterComponent 
  
   ],
   imports: [
