@@ -24,6 +24,7 @@ import { CompanyComponent } from './Company/company/company.component';
 import { CategoryComponent } from './category/category.component';
 import { FormsComponent } from './forms/forms.component';
 import { StrengthComponent } from './strength/strength.component';
+import { FooterComponent } from './footer/footer.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +41,9 @@ import { StrengthComponent } from './strength/strength.component';
     CompanyComponent,
     CategoryComponent,
     FormsComponent,
-    StrengthComponent
+    StrengthComponent,
+
+    FooterComponent
 
   ],
   imports: [
