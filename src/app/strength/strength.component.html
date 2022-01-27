@@ -1,0 +1,22 @@
+<form #Form="ngForm" (ngSubmit)="submit(Form.value)">
+
+  <div class="form-group mb-3">
+      <label for="firstName">Name<span style="color: red;">*</span></label>
+      <input required  ngModel name="Name" type="text" #Name="ngModel" class="form-control" id="Name">
+      <div class="alert alert-danger" *ngIf="Name.touched && !Name.valid">
+          <div *ngIf="Name.errors && Name.errors['required']"> Name is required.</div>
+
+      </div>
+  </div>
+  <div class="form-group mb-3">
+    <label for="lastName">Description<span style="color: red;">*</span></label>
+    <input required ngModel name="description" type="text" #description="ngModel" class="form-control" id="description">
+    <div class="alert alert-danger" *ngIf="description.touched && !description.valid">
+      description is required.
+    </div>
+</div>
+
+  <hr><button (click)="addStrength()" class="btn btn-primary" [class.disabled]="!Form.valid">Submit</button>&nbsp;
+  <button  class="btn btn-primary" data-bs-dismiss="modal">close</button>
+
+</form>
