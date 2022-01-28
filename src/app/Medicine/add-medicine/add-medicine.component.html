@@ -18,19 +18,20 @@
   </div>
   <div class="form-group mb-2">
     <label for="purchasePrice">Purchase Price<span style="color: red;">*</span></label>
-    <input required  ngModel name="purchasePrice" type="text" #PurchasePrice="ngModel" class="form-control" id="purchasePrice" [(ngModel)]="purchasePrice">
+    <input required pattern="^[0-9]+$"  ngModel name="purchasePrice" type="text" #PurchasePrice="ngModel" class="form-control" id="purchasePrice" [(ngModel)]="purchasePrice">
     <div class="alert alert-danger" *ngIf="PurchasePrice.touched && !PurchasePrice.valid">
         <div *ngIf="PurchasePrice.errors && PurchasePrice.errors['required']"> purchasePrice is required.</div>
     </div>
+    <div style="color: red;" *ngIf="PurchasePrice.errors?.['pattern']">Use only number.</div>
   </div>
 
   <div class="form-group mb-2">
     <label for="SalePrice">Sale Price<span style="color: red;">*</span></label>
-    <input required  ngModel name="salePrice" type="text" #SalePrice="ngModel" class="form-control" id="SalePrice" [(ngModel)]="salePrice">
+    <input required pattern="^[0-9]+$" ngModel name="salePrice" type="text" #SalePrice="ngModel" class="form-control" id="SalePrice" [(ngModel)]="salePrice">
     <div class="alert alert-danger" *ngIf="SalePrice.touched && !SalePrice.valid">
         <div *ngIf="SalePrice.errors && SalePrice.errors['required']"> salePrice is required.</div>
-        <div *ngIf="SalePrice.errors?.['pattern']">Enter only number.</div>
     </div>
+    <div style="color: red;" *ngIf="SalePrice.errors?.['pattern']">Use only number.</div>
   </div>
   <div class="form-group mb-2">
     <label for="expiryDate">Expire Date<span style="color: red;">*</span></label>

@@ -2,7 +2,7 @@
 
   <div class="form-group mb-3">
     <label for="firstName">Name<span style="color: red;">*</span></label>
-    <input required minlength="3" maxlength="10" ngModel name="Name" type="text" #Name="ngModel" class="form-control"
+    <input required ngModel name="Name" type="text" #Name="ngModel" class="form-control"
       id="Name">
     <div class="alert alert-danger" *ngIf="Name.touched && !Name.valid">
       <div *ngIf="Name.errors && Name.errors['required']"> Name is required.</div>

@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MedicineServiceService } from 'src/app/service/medicine/medicine-service.service';
 
@@ -14,10 +13,7 @@ export class AddMedicineComponent implements OnInit {
   categoryList$!: Observable<any[]>;
   formList$!: Observable<any[]>;
   strengthList$!: Observable<any[]>;
-  constructor(private service: MedicineServiceService, private fb: FormBuilder) {
-    this.form = fb.group({
-      number: ['', [Validators.required, Validators.pattern("^[0-9]*$")]]
-    })
+  constructor(private service: MedicineServiceService) {
    }
 
   @Input() medicine: any;
@@ -33,7 +29,6 @@ export class AddMedicineComponent implements OnInit {
   formId!: number;
   strengthId!: number;
 
-  form: FormGroup = new FormGroup({});
 
   ngOnInit(): void {
     //use this data during update medicone field
@@ -53,10 +48,6 @@ export class AddMedicineComponent implements OnInit {
     this.categoryList$ = this.service.GetCategoryList();
     this.formList$ = this.service.GetFormList();
     this.strengthList$ = this.service.GetStrengthList();
-  }
-
-  get f(){
-    return this.form.controls;
   }
 
 
