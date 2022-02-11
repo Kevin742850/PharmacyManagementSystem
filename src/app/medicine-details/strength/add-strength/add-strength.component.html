@@ -1,0 +1,21 @@
+<form>
+  <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input required pattern="[0-9]+" #Name="ngModel" type="text" class="form-control" name="name" [(ngModel)]="name" />
+      <div  style="color: red;" *ngIf="Name.touched && !Name.valid">
+        <div *ngIf="Name.errors && Name.errors['required']"> Name is required.</div>
+      </div>
+      <div style="color: red;" *ngIf="Name.errors?.['pattern']">User name not valid.</div>
+  </div>
+
+  <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <input required #Description="ngModel" type="text" class="form-control" name="description" [(ngModel)]="description" />
+      <div style="color: red;" *ngIf="Description.touched && !Description.valid">Description is required</div>
+
+  </div>
+
+  <button (click)="addstrength()" *ngIf="strength.id==0" class="btn btn-primary"> Add</button>
+  <button (click)="updatestrength()" *ngIf="strength.id!=0" class="btn btn-primary"> Update</button>&nbsp;
+  <button  class="btn btn-primary" data-bs-dismiss="modal">close</button>
+</form>

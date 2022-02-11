@@ -1,0 +1,109 @@
+<form #Form="ngForm" (ngSubmit)="submit(Form.value)">
+
+  <div class="form-group mb-2">
+      <label for="firstName">Name<span style="color: red;">*</span></label>
+      <input required  ngModel name="Name" type="text" #Name="ngModel" class="form-control" id="Name" [(ngModel)]="name">
+      <div class="alert alert-danger" *ngIf="Name.touched && !Name.valid">
+          <div *ngIf="Name.errors && Name.errors['required']"> Name is required.</div>
+
+      </div>
+  </div>
+  <div class="form-group mb-2">
+    <label for="formula">Formula<span style="color: red;">*</span></label>
+    <input required  ngModel name="Formula" type="text" #Formula="ngModel" class="form-control" id="Fngormula" [(ngModel)]="formula">
+    <div class="alert alert-danger" *ngIf="Formula.touched && !Formula.valid">
+        <div *ngIf="Formula.errors && Formula.errors['required']"> formula is required.</div>
+
+    </div>
+  </div>
+  <div class="form-group mb-2">
+    <label for="purchasePrice">Purchase Price<span style="color: red;">*</span></label>
+    <input required pattern="^[0-9]+$"  ngModel name="purchasePrice" type="text" #PurchasePrice="ngModel" class="form-control" id="purchasePrice" [(ngModel)]="purchasePrice">
+    <div class="alert alert-danger" *ngIf="PurchasePrice.touched && !PurchasePrice.valid">
+        <div *ngIf="PurchasePrice.errors && PurchasePrice.errors['required']"> purchasePrice is required.</div>
+    </div>
+    <div style="color: red;" *ngIf="PurchasePrice.errors?.['pattern']">Use only number.</div>
+  </div>
+
+  <div class="form-group mb-2">
+    <label for="SalePrice">Sale Price<span style="color: red;">*</span></label>
+    <input required pattern="^[0-9]+$" ngModel name="salePrice" type="text" #SalePrice="ngModel" class="form-control" id="SalePrice" [(ngModel)]="salePrice">
+    <div class="alert alert-danger" *ngIf="SalePrice.touched && !SalePrice.valid">
+        <div *ngIf="SalePrice.errors && SalePrice.errors['required']"> salePrice is required.</div>
+    </div>
+    <div style="color: red;" *ngIf="SalePrice.errors?.['pattern']">Use only number.</div>
+  </div>
+  <div class="form-group mb-2">
+    <label for="expiryDate">Expire Date<span style="color: red;">*</span></label>
+    <input required  ngModel name="expiryDate" type="date" #ExpiryDate="ngModel" class="form-control" id="expiryDate" [(ngModel)]="expiryDate">
+    <div class="alert alert-danger" *ngIf="ExpiryDate.touched && !ExpiryDate.valid">
+        <div *ngIf="ExpiryDate.errors && ExpiryDate.errors['required']"> expiryDate is required.</div>
+
+    </div>
+  </div>
+
+
+  <div class="form-group mb-2">
+    <label for="companyId" class="form-label">Company<span style="color: red;">*</span></label>
+    <select required  ngModel name="companyId" type="text" #CompanyId="ngModel" class="form-control" id="companyId" [(ngModel)]="companyId">
+      <option *ngFor="let d of companyList$ | async" [value]="d.id">
+        {{ d.name }}
+      </option>
+    </select>
+    <div class="alert alert-danger" *ngIf="CompanyId.touched && !CompanyId.valid">
+      <div *ngIf="CompanyId.errors && CompanyId.errors['required']"> CompanyId is required.</div>
+
+  </div>
+  </div>
+  <div class="form-group mb-2">
+    <label for="categoryId" class="form-label">Category<span style="color: red;">*</span></label>
+    <select required  ngModel name="categoryId" type="text" #CategoryId="ngModel" class="form-control" id="categoryId" [(ngModel)]="categoryId">
+      <option *ngFor="let d of categoryList$ | async" [value]="d.id">
+        {{ d.name }}
+      </option>
+    </select>
+    <div class="alert alert-danger" *ngIf="CategoryId.touched && !CategoryId.valid">
+      <div *ngIf="CategoryId.errors && CategoryId.errors['required']"> categoryId is required.</div>
+
+  </div>
+  </div>
+  <div class="form-group mb-2">
+    <label for="formId" class="form-label">Form<span style="color: red;">*</span></label>
+    <select required  ngModel name="formId" type="text" #FormId="ngModel" class="form-control" id="formId" [(ngModel)]="formId">
+      <option *ngFor="let d of formList$ | async" [value]="d.id">
+        {{ d.name }}
+      </option>
+    </select>
+    <div class="alert alert-danger" *ngIf="FormId.touched && !FormId.valid">
+      <div *ngIf="FormId.errors && FormId.errors['required']"> formId is required.</div>
+
+  </div>
+  </div>
+  <div class="form-group mb-2">
+    <label for="strengthId" class="form-label">Strength<span style="color: red;">*</span></label>
+    <select required  ngModel name="strengthId" type="text" #StrengthId="ngModel" class="form-control" id="strengthId" [(ngModel)]="strengthId">
+      <option *ngFor="let d of strengthList$ | async" [value]="d.id">
+        {{ d.name }}
+      </option>
+    </select>
+    <div class="alert alert-danger" *ngIf="StrengthId.touched && !StrengthId.valid">
+      <div *ngIf="StrengthId.errors && StrengthId.errors['required']"> strengthId is required.</div>
+
+  </div>
+  </div>
+  <hr>
+  <div class="mb-3 form-check" >
+    <input type="checkbox" class="form-check-input" id="exampleCheck1" name="isControlDrug" value="true" [(ngModel)]="isControlDrug">
+    <label class="form-check-label" for="drug">Is drug?</label>
+  </div>
+  <hr>
+
+  <button (click)="addMedicine()" class="btn btn-primary" *ngIf="medicine.id==0" >
+    Add
+  </button>
+  <button (click)="updateMedicine()" class="btn btn-primary" *ngIf="medicine.id!=0" >
+    Update
+  </button>
+  &nbsp;
+  <button  class="btn btn-primary" data-bs-dismiss="modal">close</button>
+</form>

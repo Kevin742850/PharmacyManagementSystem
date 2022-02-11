@@ -1,0 +1,40 @@
+<form>
+  <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" class="form-control" name="name" [(ngModel)]="name" />
+
+  </div>
+  <div class="mb-3">
+      <label for="phone" class="form-label">Phone No.</label>
+      <input type="text" class="form-control" name="phone" [(ngModel)]="phone" />
+  </div>
+  <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" name="email" [(ngModel)]="email" />
+  </div>
+  <div class="mb-3">
+      <label for="state" class="form-label">State</label>
+      <input type="text" class="form-control" name="State" [(ngModel)]="state" />
+  </div>
+
+  <div class="mb-3">
+      <label for="city" class="form-label">City</label>
+      <input type="text" class="form-control" name="city" [(ngModel)]="city" />
+  </div>
+  <div class="mb-3">
+      <label for="zip" class="form-label">Zip Code</label>
+      <input type="text" class="form-control" name="zip" [(ngModel)]="zip" />
+  </div>
+
+  <div class="mb-3">
+      <label for="description" class="form-label">Create Date</label>
+      <input type="date" class="form-control" name="createDate" [(ngModel)]="createDate" />
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Modified Date</label>
+    <input type="date" class="form-control" name="modifiedDate" [(ngModel)]="modifiedDate" />
+</div>
+
+  <button (click)="addPharmacy()" *ngIf="pharmacy.id==0" class="btn btn-primary"> Add</button>
+  <button (click)="updatePharmacy()" *ngIf="pharmacy.id!=0" class="btn btn-primary"> Update</button>
+</form>

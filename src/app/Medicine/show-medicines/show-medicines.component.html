@@ -1,0 +1,292 @@
+<div style="width: 78%;float: right;margin-right: 1%">
+  <div>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-secondary float-end m-2" data-bs-toggle="modal" data-bs-target="#mediadd"
+      (click)="addMedicine()">
+      Add Medicine
+    </button>
+    <button type="button" class="btn btn-secondary float-end m-2" data-bs-toggle="modal" data-bs-target="#medicom"
+      (click)="addCompany()">
+      Add Company
+    </button>
+    <button type="button" class="btn btn-secondary float-end m-2" data-bs-toggle="modal" data-bs-target="#medicat"
+      (click)="addCategory()">
+      Add Category
+    </button>
+    <button type="button" class="btn btn-secondary float-end m-2" data-bs-toggle="modal" data-bs-target="#mediform"
+      (click)="addForm()">
+      Add Form
+    </button>
+    <button type="button" class="btn btn-secondary float-end m-2" data-bs-toggle="modal" data-bs-target="#medistrn"
+      (click)="addStrength()">
+      Add Strength
+    </button>
+    <table class="table table-striped">
+      <thead>
+        <!-- <th>Id</th> -->
+        <th>Name</th>
+        <th>Formula</th>
+        <th>Expiry Date</th>
+        <th>Purchase Price</th>
+        <th>Sale Price</th>
+        <th>Is Drug</th>
+        <th>Medicines</th>
+        <th>Options</th>
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let item of medicineList |  paginate:{
+
+          id:'medicine_list_paging',
+          itemsPerPage:3,
+          currentPage:page,
+          totalItems: totalRecords
+      }">
+
+          <td>
+            {{item.name}}
+          </td>
+          <td>
+            {{item.formula}}
+          </td>
+          <td>
+            {{item.expiryDate | date: 'shortDate'}}
+          </td>
+          <td>
+            {{item.purchasePrice}}
+          </td>
+          <td>{{item.salePrice}}</td>
+          <td>{{item.isControlDrug}}</td>
+          <td>
+            {{companyMap.get(item.companyId)}}-{{formMap.get(item.formId)}}-{{strengthMap.get(item.strengthId)}}-{{categoryMap.get(item.strengthId)}}
+          </td>
+
+          <td>
+            <button class="btn btn-outline-primary me-2 mb-1" (click)="editMedicine(item)" data-bs-toggle="modal"
+              data-bs-target="#mediadd">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                <path
+                  d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                <path fill-rule="evenodd"
+                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+              </svg></button>
+            <button class="btn btn-outline-danger me-2 mb-1" (click)="deleteMedicine(item)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                <path
+                  d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+              </svg>
+            </button>
+
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+    <div>
+
+      <pagination-controls id='medicine_list_paging' (pageChange)="page=$event"></pagination-controls>
+  </div>
+    <div class="alert alert-success" role="alert" id="add-success-alart1">
+      Medicine Successfully Added.
+    </div>
+    <div class="alert alert-success" role="alert" id="update-success-alart1">
+      Medicine Successfully Updateed.
+    </div>
+    <div class="alert alert-success" role="alert" id="delete-success-alart1">
+      Medicine Successfully Deleted.
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="mediadd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">{{modalTitle}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modalClose()"
+              id="add-edit-modal-close"></button>
+          </div>
+          <div class="modal-body">
+            <app-add-medicine [medicine]="medicine" *ngIf="activateModel"></app-add-medicine>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- Company Model -->
+    <div class="modal fade" id="medicom" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">{{modalTitle}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modalClose()"
+              id="add-edit-modal-close1"></button>
+          </div>
+          <div class="modal-body">
+            <form #Form="ngForm" (ngSubmit)="submits(Form.value)">
+
+              <div class="form-group mb-3">
+                <label for="firstName">Name<span style="color: red;">*</span></label>
+                <input required ngModel name="Name" type="text" #Name="ngModel" class="form-control"
+                  id="Name">
+                <div class="alert alert-danger" *ngIf="Name.touched && !Name.valid">
+                  <div *ngIf="Name.errors && Name.errors['required']"> Name is required.</div>
+
+                </div>
+              </div>
+              <div class="form-group mb-3">
+                <label for="lastName">Description<span style="color: red;">*</span></label>
+                <input required ngModel name="description" type="text" #description="ngModel" class="form-control" id="description">
+                <div class="alert alert-danger" *ngIf="description.touched && !description.valid">
+                  description is required.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="strengthId" class="form-label">Distribution<span style="color: red;">*</span></label>
+                <select class="form-control" name="distributionId" id="distributionId" [(ngModel)]="distributionId">
+                  <option *ngFor="let type of distributionList$ | async" [value]="type.id">
+                    {{ type.name }}
+                  </option>
+                </select>
+              </div>
+
+              <hr><button (click)="addCompanys()" class="btn btn-primary" [class.disabled]="!Form.valid">Submit</button>&nbsp;
+              <button class="btn btn-primary" data-bs-dismiss="modal">close</button>
+
+            </form>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Model -->
+    <div class="modal fade" id="medicat" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">{{modalTitle}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modalClose()"
+              id="add-edit-modal-close2"></button>
+          </div>
+          <div class="modal-body">
+            <form #Form="ngForm" (ngSubmit)="submit(Form.value)">
+
+              <div class="form-group mb-3">
+                  <label for="firstName">Name<span style="color: red;">*</span></label>
+                  <input required minlength="3" maxlength="10" ngModel name="Name" type="text" #Name="ngModel" class="form-control" id="Name">
+                  <div class="alert alert-danger" *ngIf="Name.touched && !Name.valid">
+                      <div *ngIf="Name.errors && Name.errors['required']"> Name is required.</div>
+                      <div *ngIf="Name.errors && Name.errors['minlength']">Name is minimum {{ Name.errors && Name.errors['minlength'].requiredLength }} character.</div>
+                      <div *ngIf="Name.errors && Name.errors['maxlength']">Name is maximum 10 character.</div>
+                  </div>
+              </div>
+              <div class="form-group mb-3">
+                <label for="lastName">Description<span style="color: red;">*</span></label>
+                <input required ngModel name="description" type="text" #description="ngModel" class="form-control" id="description">
+                <div class="alert alert-danger" *ngIf="description.touched && !description.valid">
+                  description is required.
+                </div>
+            </div>
+
+              <hr><button (click)="addCategorys()" class="btn btn-primary" [class.disabled]="!Form.valid">Submit</button>&nbsp;
+              <button  class="btn btn-primary" data-bs-dismiss="modal">close</button>
+
+            </form>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Model -->
+    <div class="modal fade" id="mediform" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">{{modalTitle}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modalClose()"
+              id="add-edit-modal-close3"></button>
+          </div>
+          <div class="modal-body">
+            <form #Form="ngForm" (ngSubmit)="submit(Form.value)">
+
+              <div class="form-group mb-3">
+                  <label for="firstName">Name<span style="color: red;">*</span></label>
+                  <input required  ngModel name="Name" type="text" #Name="ngModel" class="form-control" id="Name">
+                  <div class="alert alert-danger" *ngIf="Name.touched && !Name.valid">
+                      <div *ngIf="Name.errors && Name.errors['required']"> Name is required.</div>
+
+                  </div>
+              </div>
+              <div class="form-group mb-3">
+                <label for="lastName">Description<span style="color: red;">*</span></label>
+                <input required ngModel name="description" type="text" #description="ngModel" class="form-control" id="description">
+                <div class="alert alert-danger" *ngIf="description.touched && !description.valid">
+                  description is required.
+                </div>
+            </div>
+
+              <hr><button (click)="addForms()" class="btn btn-primary" [class.disabled]="!Form.valid">Submit</button>&nbsp;
+              <button  class="btn btn-primary" data-bs-dismiss="modal">close</button>
+
+            </form>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Strength Model -->
+    <div class="modal fade" id="medistrn" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">{{modalTitle}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modalClose()"
+              id="add-edit-modal-close4"></button>
+          </div>
+          <div class="modal-body">
+            <form #Form="ngForm" (ngSubmit)="submit(Form.value)">
+
+              <div class="form-group mb-3">
+                  <label for="firstName">Name<span style="color: red;">*</span></label>
+                  <input required  ngModel name="Name" type="text" #Name="ngModel" class="form-control" id="Name">
+                  <div class="alert alert-danger" *ngIf="Name.touched && !Name.valid">
+                      <div *ngIf="Name.errors && Name.errors['required']"> Name is required.</div>
+
+                  </div>
+              </div>
+              <div class="form-group mb-3">
+                <label for="lastName">Description<span style="color: red;">*</span></label>
+                <input required ngModel name="description" type="text" #description="ngModel" class="form-control" id="description">
+                <div class="alert alert-danger" *ngIf="description.touched && !description.valid">
+                  description is required.
+                </div>
+            </div>
+
+              <hr><button (click)="addStrengths()" class="btn btn-primary" [class.disabled]="!Form.valid">Submit</button>&nbsp;
+              <button  class="btn btn-primary" data-bs-dismiss="modal">close</button>
+
+            </form>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
