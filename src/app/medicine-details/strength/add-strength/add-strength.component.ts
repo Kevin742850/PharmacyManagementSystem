@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AddServiceService } from 'src/app/service/add-service.service';
+import { AlertifyService } from 'src/app/service/Alertify/alertify.service';
 
 @Component({
   selector: 'app-add-strength',
@@ -8,7 +9,7 @@ import { AddServiceService } from 'src/app/service/add-service.service';
 })
 export class AddStrengthComponent implements OnInit {
 
-  constructor(private Service: AddServiceService) { }
+  constructor(private Service: AddServiceService, private alert:AlertifyService) { }
   @Input() strength: any;
   id: number = 0;
   name: string = "";
@@ -30,15 +31,7 @@ export class AddStrengthComponent implements OnInit {
       if (closeModalBtn) {
         closeModalBtn.click();
       }
-      var showAddSuccess = document.getElementById('add-success-alert');
-      if (showAddSuccess) {
-        showAddSuccess.style.display = "block";
-      }
-      setTimeout(function () {
-        if (showAddSuccess) {
-          showAddSuccess.style.display = "none";
-        }
-      }, 4000);
+      this.alert.success('Added successfulyy');
     });
   }
 
@@ -55,16 +48,7 @@ export class AddStrengthComponent implements OnInit {
       if (closeModalBtn) {
         closeModalBtn.click();
       }
-      var showUpdateSuccess = document.getElementById('update-success-alert');
-      if (showUpdateSuccess) {
-        showUpdateSuccess.style.display = "block";
-      }
-      setTimeout(function () {
-        if (showUpdateSuccess) {
-          showUpdateSuccess.style.display = "none";
-        }
-
-      }, 4000);
+      this.alert.success('Update successfulyy');
     });
   }
 }
