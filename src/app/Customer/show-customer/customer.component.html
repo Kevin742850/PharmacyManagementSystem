@@ -25,6 +25,9 @@
                     <td style="display: none;">
                         {{item.id}}
                     </td>
+                    <td style="display: none;">
+                      {{item.pharmacyId}}
+                  </td>
                     <td>
                         {{item.name}}
                     </td>
@@ -60,15 +63,7 @@
 
             <pagination-controls id='customer_list_paging' (pageChange)="page=$event"></pagination-controls>
         </div>
-        <div class="alert alert-success" role="alert" id="add-success-alert">
-            Customer Successfully Added.
-        </div>
-        <div class="alert alert-success" role="alert" id="update-success-alert">
-            Customer Successfully Updated.
-        </div>
-        <div class="alert alert-success" role="alert" id="delete-success-alert">
-            Customer Successfully Deleted.
-        </div>
+
 
         <!-- Add Customer Modal -->
         <div class="modal fade" id="addCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">

@@ -1,4 +1,4 @@
-<p>show-strength works!</p>
+
 <div style="width: 78%;float: right;margin-right: 1%">
   <div>
 
@@ -11,11 +11,12 @@
               <th style="display: none;">Id</th>
               <th>Name</th>
               <th>Description</th>
+              <th>Action</th>
           </thead>
           <tbody>
               <tr *ngFor="let item of strengthList | paginate:{
 
-                  id:'category_list_paging',
+                  id:'strength_list_paging',
                   itemsPerPage:10,
                   currentPage:page,
                   totalItems: totalRecords
@@ -50,7 +51,7 @@
 
           <pagination-controls id='strength_list_paging' (pageChange)="page=$event"></pagination-controls>
       </div>
-      
+
 
       <!-- Add form Modal -->
       <div class="modal fade" id="addstrengthModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">

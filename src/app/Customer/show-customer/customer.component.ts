@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { AlertifyService } from 'src/app/service/Alertify/alertify.service';
 import { CustomerService } from 'src/app/service/Customer/customer.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class CustomerComponent implements OnInit {
   customer: any;
   totalRecords: number ;
   page: number = 1;
-  constructor(private customerService: CustomerService) {
+  constructor(private customerService: CustomerService, public alert:AlertifyService) {
     this.customerList = new Array<any>();
     this.totalRecords=0;
   }
@@ -54,20 +54,12 @@ export class CustomerComponent implements OnInit {
   }
   deleteCustomer(item: any) {
     if (confirm("Are you want to delete customer ?")) {
-      this.customerService.DeleteCustomer(item.id).subscribe(res => {
+      this.customerService.DeleteCustomer(item.id, 1).subscribe(res => {
         var closeModalBtn = document.getElementById('add-edit-modal-close');
         if (closeModalBtn) {
           closeModalBtn.click();
         }
-        var showDeleteSuccess = document.getElementById('delete-success-alert');
-        if (showDeleteSuccess) {
-          showDeleteSuccess.style.display = "block";
-        }
-        setTimeout(function () {
-          if (showDeleteSuccess) {
-            showDeleteSuccess.style.display = "none";
-          }
-        }, 4000);
+        this.alert.success('Deleted successfulyy');
         this.ngOnInit();
       });
     }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AddServiceService } from 'src/app/service/add-service.service';
+import { AlertifyService } from 'src/app/service/Alertify/alertify.service';
 
 @Component({
   selector: 'app-show-form',
@@ -15,7 +16,7 @@ export class ShowFormComponent implements OnInit {
   form: any;
   totalRecords: number ;
   page: number = 1;
-  constructor(private formService: AddServiceService) {
+  constructor(private formService: AddServiceService, public alert:AlertifyService) {
     this.formList = new Array<any>();
     this.totalRecords=0;
   }
@@ -32,6 +33,7 @@ export class ShowFormComponent implements OnInit {
       id: 0,
       name: null,
       description: null,
+      pharmacyid: 1,
     }
     this.modalTitle = "Add form";
     this.activateAddmedFormComponent = true;
@@ -52,15 +54,7 @@ export class ShowFormComponent implements OnInit {
         if (closeModalBtn) {
           closeModalBtn.click();
         }
-        var showDeleteSuccess = document.getElementById('delete-success-alert');
-        if (showDeleteSuccess) {
-          showDeleteSuccess.style.display = "block";
-        }
-        setTimeout(function () {
-          if (showDeleteSuccess) {
-            showDeleteSuccess.style.display = "none";
-          }
-        }, 4000);
+        this.alert.success('Deleted successfulyy');
         this.ngOnInit();
       });
     }

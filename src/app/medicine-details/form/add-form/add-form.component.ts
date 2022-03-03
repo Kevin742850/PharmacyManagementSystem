@@ -14,17 +14,24 @@ export class AddFormComponent implements OnInit {
   id: number = 0;
   name: string = "";
   description : string ="";
+  pharmacyid : number = 0;
 
+  pharmacyList : any;
   ngOnInit(): void {
     this.id = this.form.id;
     this.name = this.form.name;
+    this.pharmacyid = this.form.pharmacyid;
     this.description = this.form.description;
+
+    this.pharmacyList = localStorage.getItem('pharmacyId')
+
   }
   addform() {
     var form =
     {
       name: this.name,
       description : this.description,
+      pharmacyId :this.pharmacyList
     }
     this.formService.AddForm(form).subscribe(res => {
       var closeModalBtn = document.getElementById('add-edit-modal-close');
@@ -35,12 +42,14 @@ export class AddFormComponent implements OnInit {
     });
   }
 
+
   updateform() {
     var form =
     {
       id: this.id,
       name: this.name,
       description:this.description,
+      pharmacyId : this.pharmacyid
     }
     var id: number = this.id;
     this.formService.UpdateForm(id, form).subscribe(res => {

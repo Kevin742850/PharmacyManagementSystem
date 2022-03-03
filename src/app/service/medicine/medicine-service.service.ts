@@ -23,16 +23,16 @@ return this.http.post(this.medicineAPIURL+'/Medicines',data);
   {
 return this.http.put(this.medicineAPIURL+'/Medicines/'+id,data);
   }
-DeleteMedicine(id:number|string)
+DeleteMedicine(id:number|string, pid:number | string)
 {
-return this.http.delete(this.medicineAPIURL+'/Medicines/'+id);
+return this.http.delete(this.medicineAPIURL+'/Medicines/'+id + pid);
 }
 
 // Inspection Types
-GetCompanyList(): Observable<any[]> {
-  return this.http.get<any>(this.medicineAPIURL + '/Companies');
+// GetCompanyList(): Observable<any[]> {
+//   return this.http.get<any>(this.medicineAPIURL + '/Companies');
 
-}
+// }
 // AddCompany(data:any)
 //   {
 // return this.http.post(this.medicineAPIURL+'/Companies',data);
@@ -48,10 +48,10 @@ GetCompanyList(): Observable<any[]> {
 
 // // Form
 
-GetFormList(): Observable<any[]> {
-  return this.http.get<any>(this.medicineAPIURL + '/Forms');
+// GetFormList(): Observable<any[]> {
+//   return this.http.get<any>(this.medicineAPIURL + '/Forms');
 
-}
+// }
 // AddForm(data:any)
 //   {
 // return this.http.post(this.medicineAPIURL+'/Forms',data);
@@ -67,10 +67,10 @@ GetFormList(): Observable<any[]> {
 
 // //strengths
 
-GetStrengthList(): Observable<any[]> {
-  return this.http.get<any>(this.medicineAPIURL + '/Strengths');
+// GetStrengthList(): Observable<any[]> {
+//   return this.http.get<any>(this.medicineAPIURL + '/Strengths');
 
-}
+// }
 // AddStrength(data:any)
 //   {
 // return this.http.post(this.medicineAPIURL+'/Strengths',data);
@@ -85,10 +85,10 @@ GetStrengthList(): Observable<any[]> {
 // }
 
 // //Categories
-GetCategoryList(): Observable<any[]> {
-  return this.http.get<any>(this.medicineAPIURL + '/Categories');
+// GetCategoryList(): Observable<any[]> {
+//   return this.http.get<any>(this.medicineAPIURL + '/Categories');
 
-}
+// }
 // Addategory(data:any)
 //   {
 // return this.http.post(this.medicineAPIURL+'/Categories',data);

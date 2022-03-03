@@ -14,24 +14,31 @@ export class AddCategoryComponent implements OnInit {
   id: number = 0;
   name: string = "";
   description : string ="";
+  pharmacyid : number = 0;
+
+  pharmacyList: any
 
   ngOnInit(): void {
     this.id = this.category.id;
     this.name = this.category.name;
     this.description = this.category.description;
+    this.pharmacyid = this.category.pharmacyid;
+
+    this.pharmacyList = localStorage.getItem('pharmacyId')
   }
   addcategory() {
     var category =
     {
       name: this.name,
       description : this.description,
+      pharmacyId : this.pharmacyList
     }
     this.Service.AddCategory(category).subscribe(res => {
       var closeModalBtn = document.getElementById('add-edit-modal-close');
       if (closeModalBtn) {
         closeModalBtn.click();
       }
-      this.alert.success('added successfulyy');
+      this.alert.success('Added successfully');
 
     });
   }
@@ -42,6 +49,7 @@ export class AddCategoryComponent implements OnInit {
       id: this.id,
       name: this.name,
       description:this.description,
+      pharmacyId : this.pharmacyid
     }
     var id: number = this.id;
     this.Service.UpdateCategory(id, category).subscribe(res => {

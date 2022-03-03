@@ -96,6 +96,9 @@
     <input type="checkbox" class="form-check-input" id="exampleCheck1" name="isControlDrug" value="true" [(ngModel)]="isControlDrug">
     <label class="form-check-label" for="drug">Is drug?</label>
   </div>
+  <div class="mb-3">
+    <input type="text" class="form-control" name="pharmacyId" value="1" [(ngModel)]="pharmacyId" style="display: none;" />
+  </div>
   <hr>
 
   <button (click)="addMedicine()" class="btn btn-primary" *ngIf="medicine.id==0" >

@@ -14,6 +14,9 @@
       <div style="color: red;" *ngIf="Description.touched && !Description.valid">Description is required</div>
 
   </div>
+  <div class="mb-3">
+    <input type="text" class="form-control" name="pharmacyId" value="1" [(ngModel)]="pharmacyId" style="display: none;" />
+  </div>
 
   <button (click)="addstrength()" *ngIf="strength.id==0" class="btn btn-primary"> Add</button>
   <button (click)="updatestrength()" *ngIf="strength.id!=0" class="btn btn-primary"> Update</button>&nbsp;

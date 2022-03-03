@@ -14,17 +14,23 @@ export class AddStrengthComponent implements OnInit {
   id: number = 0;
   name: string = "";
   description : string ="";
+  pharmacyId : number = 0;
+  pharmacyList : any
 
   ngOnInit(): void {
     this.id = this.strength.id;
     this.name = this.strength.name;
     this.description = this.strength.description;
+    this.pharmacyId = this.strength.pharmacyId;
+
+    this.pharmacyList = localStorage.getItem('pharmacyId')
   }
   addstrength() {
     var strength =
     {
       name: this.name,
       description : this.description,
+      pharmacyId :this.pharmacyList
     }
     this.Service.AddStrength(strength).subscribe(res => {
       var closeModalBtn = document.getElementById('add-edit-modal-close');
@@ -41,6 +47,7 @@ export class AddStrengthComponent implements OnInit {
       id: this.id,
       name: this.name,
       description:this.description,
+      pharmacyId : this.pharmacyId
     }
     var id: number = this.id;
     this.Service.UpdateCategory(id, strength).subscribe(res => {

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CustomerService } from 'src/app/service/Customer/customer.service';
 import { CommonModule } from '@angular/common';
+import { AlertifyService } from 'src/app/service/Alertify/alertify.service';
 @Component({
   selector: 'app-upsert-customer',
   templateUrl: './upsert-customer.component.html',
@@ -8,7 +9,7 @@ import { CommonModule } from '@angular/common';
 })
 export class UpsertCustomerComponent implements OnInit {
 
-  constructor(private customerService: CustomerService) { }
+  constructor(private customerService: CustomerService, public alert:AlertifyService) { }
   @Input() customer: any;
   id: number = 0;
   name: string = "";
@@ -19,8 +20,8 @@ export class UpsertCustomerComponent implements OnInit {
   ssn: string = "";
   email: string = "";
   phone: string = "";
-  pharmacyid: number = 1;
   description : string ="";
+  pharmacyid : number = 0;
 
   ngOnInit(): void {
     this.id = this.customer.id;
@@ -52,15 +53,7 @@ export class UpsertCustomerComponent implements OnInit {
       if (closeModalBtn) {
         closeModalBtn.click();
       }
-      var showAddSuccess = document.getElementById('add-success-alert');
-      if (showAddSuccess) {
-        showAddSuccess.style.display = "block";
-      }
-      setTimeout(function () {
-        if (showAddSuccess) {
-          showAddSuccess.style.display = "none";
-        }
-      }, 4000);
+      this.alert.success('Added successfulyy');
     });
   }
 
@@ -84,16 +77,7 @@ export class UpsertCustomerComponent implements OnInit {
       if (closeModalBtn) {
         closeModalBtn.click();
       }
-      var showUpdateSuccess = document.getElementById('update-success-alert');
-      if (showUpdateSuccess) {
-        showUpdateSuccess.style.display = "block";
-      }
-      setTimeout(function () {
-        if (showUpdateSuccess) {
-          showUpdateSuccess.style.display = "none";
-        }
-
-      }, 4000);
+      this.alert.success('Updated successfulyy');
     });
   }
 }

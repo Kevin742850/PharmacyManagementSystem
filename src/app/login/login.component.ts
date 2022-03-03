@@ -16,17 +16,17 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
   onSubmit(signInForm: NgForm) {
+
     if (!signInForm.valid) {
-      this.isFormValid = true;
+     this.isFormValid = true;
       this.areCredInValid = false;
-      return;
     }
 this.CheckValidUser(signInForm);
   }
   private CheckValidUser(signInForm: NgForm) {
     const signInData = new SignInData(signInForm.value.email, signInForm.value.password);
     this.authenticationService.Authenticate(signInData);
-    if (!this.authenticationService.isAuth) {
+    if (this.authenticationService.isAuth) {
       this.isFormValid = false;
       this.areCredInValid = true;
     }

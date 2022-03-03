@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AddServiceService } from 'src/app/service/add-service.service';
+import { AlertifyService } from 'src/app/service/Alertify/alertify.service';
 import { MedicineServiceService } from 'src/app/service/medicine/medicine-service.service';
 
 @Component({
@@ -11,15 +12,15 @@ import { MedicineServiceService } from 'src/app/service/medicine/medicine-servic
 export class ShowMedicinesComponent implements OnInit {
 
   p: number = 1;
-  // medicineList: Array<any>
-  customer: any;
   totalRecords: number ;
     page: number = 1;
 
 
     name: string = "";
     description: string = "";
+    Description : string = "";
     distributionId!: number;
+    pharmacyId : number = 0;
 
   distributionList$!: Observable<any[]>;
   medicineList : Array<any>;
@@ -31,13 +32,14 @@ export class ShowMedicinesComponent implements OnInit {
   categoryList: any = [];
   strengthList$!: Observable<any[]>;
   strengthList: any = [];
+  pharmacyList:any = [];
 
   companyMap: Map<number, string> = new Map()
   formMap: Map<number, string> = new Map()
   categoryMap: Map<number, string> = new Map()
   strengthMap: Map<number, string> = new Map()
 
-  constructor(private service: MedicineServiceService, private service2: AddServiceService) {
+  constructor(private service: MedicineServiceService, private service2: AddServiceService, private alert: AlertifyService) {
     this.medicineList = new Array<any>();
      this.totalRecords=0;
    }
@@ -49,14 +51,15 @@ export class ShowMedicinesComponent implements OnInit {
       this.medicineList = data;
       this.totalRecords = data.length;
     })
-    this.companyList$ = this.service.GetCompanyList();
-    this.formList$ = this.service.GetCompanyList();
-    this.categoryList$ = this.service.GetCompanyList();
-    this.strengthList$ = this.service.GetCompanyList();
+    this.companyList$ = this.service2.GetCompanyList();
+    this.formList$ = this.service2.GetFormList();
+    this.categoryList$ = this.service2.GetCategoryList();
+    this.strengthList$ = this.service2.GetStrengthList();
     this.CompanyMap();
     this.FormMap();
     this.CategoryMap();
     this.StrengthMap();
+    this.pharmacyList = localStorage.getItem('pharmacyId');
 
   }
   modalTitle: string = '';
@@ -79,104 +82,46 @@ export class ShowMedicinesComponent implements OnInit {
     this.activateModel = true;
   }
 
-  submit(form:any){
-    this.name = form.Name;
-    this.description = form.discription;
+  submit(form:any)
+  {debugger
+
+    this.name = form.name1;
+    this.description = form.description1;
+    this.pharmacyId = form.pharmacyId;
   }
 
-  addCategorys() {
-    var category =
-    {
-      name: this.name,
-      discription: this.description,
-
-
-    }
-
-    this.service2.AddCategory(category).subscribe(res => {
-      var closeModalBtn = document.getElementById('add-edit-modal-close2');
-      if (closeModalBtn) {
-        closeModalBtn.click();
-      }
-      var showAddSuccess = document.getElementById('add-success-alert');
-      if (showAddSuccess) {
-        showAddSuccess.style.display = "block";
-      }
-      setTimeout(function () {
-        if (showAddSuccess) {
-          showAddSuccess.style.display = "none";
-        }
-
-      }, 4000);
-    });
-
-  }
-
-  addStrengths() {
-    var strength =
-    {
-      name: this.name,
-      discription: this.description,
-
-
-    }
-    this.service2.AddStrength(strength).subscribe(res => {
-      var closeModalBtn = document.getElementById('add-edit-modal-close4');
-      if (closeModalBtn) {
-        closeModalBtn.click();
-      }
-      var showAddSuccess = document.getElementById('add-success-alert');
-      if (showAddSuccess) {
-        showAddSuccess.style.display = "block";
-      }
-      setTimeout(function () {
-        if (showAddSuccess) {
-          showAddSuccess.style.display = "none";
-        }
-
-      }, 4000);
-    });
-
-  }
   addForms() {
-    var form =
+    var form1 =
     {
       name: this.name,
-      discription: this.description,
-
-
+      description: this.Description,
+      pharmacyId: this.pharmacyList
     }
 
-    this.service2.AddForm(form).subscribe(res => {
-      var closeModalBtn = document.getElementById('add-edit-modal-close3');
+    this.service2.AddForm(form1).subscribe(res => {
+      var closeModalBtn = document.getElementById('modal-close');
       if (closeModalBtn) {
         closeModalBtn.click();
       }
-      var showAddSuccess = document.getElementById('add-success-alert');
-      if (showAddSuccess) {
-        showAddSuccess.style.display = "block";
-      }
-      setTimeout(function () {
-        if (showAddSuccess) {
-          showAddSuccess.style.display = "none";
-        }
-
-      }, 4000);
+      this.alert.success('Added successfulyy');
     });
 
   }
-  submits(form:any){
-    this.name = form.Name;
-    this.description = form.description;
-    this.distributionId = form.distributionId;
-  }
 
-  addCompanys() {
+  // nullfuntion(){
+  //   this.name == null;
+  //   this.Description ==null;
+
+  // }
+
+
+  addCompanys(form:any) {
     var company =
     {
-      name: this.name,
-      discription: this.description,
-      distributionId: this.distributionId
+      name: form.Name,
+      description: form.description,
+      distributionId: form.distributionId,
+      pharmacyId: this.pharmacyList
 
     }
     this.service2.AddCompany(company).subscribe(res => {
@@ -184,16 +129,7 @@ export class ShowMedicinesComponent implements OnInit {
       if (closeModalBtn) {
         closeModalBtn.click();
       }
-      var showAddSuccess = document.getElementById('add-success-alert');
-      if (showAddSuccess) {
-        showAddSuccess.style.display = "block";
-      }
-      setTimeout(function () {
-        if (showAddSuccess) {
-          showAddSuccess.style.display = "none";
-        }
-
-      }, 4000);
+      this.alert.success('Added successfully');
     });
   }
 
@@ -202,21 +138,36 @@ export class ShowMedicinesComponent implements OnInit {
     this.company = {
       id: 0,
       name: null,
-      discription: null,
-      createDate: null,
-      ModifiedDate: null
+      description: null,
+      pharmacyId: 0,
     }
     this.modalTitle = "Add Company";
     this.activateModel = true;
+  }
+
+  addCategorys() {
+    var category =
+    {
+      name: this.name,
+      description: this.Description,
+      pharmacyId: this.pharmacyList
+
+    }
+    this.service2.AddCategory(category).subscribe(res => {
+      var closeModalBtn = document.getElementById('modal-closed3');
+      if (closeModalBtn) {
+        closeModalBtn.click();
+      }
+      this.alert.success('Added successfully');
+    });
   }
 
   addCategory() {
     this.category = {
       id: 0,
       name: null,
-      discription: null,
-      createDate: null,
-      ModifiedDate: null
+      description: null,
+      pharmacyId: 0,
     }
     this.modalTitle = "Add Category";
     this.activateModel = true;
@@ -224,25 +175,41 @@ export class ShowMedicinesComponent implements OnInit {
   addForm() {
     this.form = {
       id: 0,
-      name: null,
-      discription: null,
-      createDate: null,
-      ModifiedDate: null
+      name:null ,
+      Description: null,
+      pharmacyId: 0,
     }
     this.modalTitle = "Add Form";
     this.activateModel = true;
+  }
+
+  addStrengths() {
+    var strength =
+    {
+      name: this.name,
+      Description: this.Description,
+      pharmacyId: this.pharmacyList
+
+    }
+    this.service2.AddStrength(strength).subscribe(res => {
+      var closeModalBtn = document.getElementById('modal-closed2');
+      if (closeModalBtn) {
+        closeModalBtn.click();
+      }
+      this.alert.success('Added data successfully');
+    });
   }
   addStrength() {
     this.strength = {
       id: 0,
       name: null,
-      discription: null,
-      createDate: null,
-      ModifiedDate: null
+      Description: null,
+      pharmacyId: 0,
     }
     this.modalTitle = "Add Strength";
     this.activateModel = true;
   }
+
 
   editMedicine(item: any) {
 
@@ -252,20 +219,12 @@ export class ShowMedicinesComponent implements OnInit {
   }
   deleteMedicine(item: any) {
     if (confirm("Are you want to delete Medicine ?")) {
-      this.service.DeleteMedicine(item.id).subscribe(res => {
+      this.service.DeleteMedicine(item.id, item.pharmacyId).subscribe(res => {
         var closeModalBtn = document.getElementById('add-edit-modal-close');
         if (closeModalBtn) {
           closeModalBtn.click();
         }
-        var showDeleteSuccess = document.getElementById('delete-success-alart1');
-        if (showDeleteSuccess) {
-          showDeleteSuccess.style.display = "block";
-        }
-        setTimeout(function () {
-          if (showDeleteSuccess) {
-            showDeleteSuccess.style.display = "none";
-          }
-        }, 4000);
+        this.alert.success('Deleted successfulyy');
         this.ngOnInit();
       });
     }
@@ -274,9 +233,10 @@ export class ShowMedicinesComponent implements OnInit {
   modalClose() {
     this.activateModel = false;
     this.ngOnInit();
+    // this.nullfuntion();
   }
   CompanyMap() {
-    this.service.GetCompanyList().subscribe(data => {
+    this.service2.GetCompanyList().subscribe(data => {
       this.companyList = data;
       for (let i = 0; i < data.length; i++) {
         this.companyMap.set(this.companyList[i].id, this.companyList[i].name);
@@ -286,7 +246,7 @@ export class ShowMedicinesComponent implements OnInit {
   }
 
   FormMap() {
-    this.service.GetFormList().subscribe(data => {
+    this.service2.GetFormList().subscribe(data => {
       this.formList = data;
       for (let i = 0; i < data.length; i++) {
         this.formMap.set(this.formList[i].id, this.formList[i].name);
@@ -296,7 +256,7 @@ export class ShowMedicinesComponent implements OnInit {
   }
 
   CategoryMap() {
-    this.service.GetCategoryList().subscribe(data => {
+    this.service2.GetCategoryList().subscribe(data => {
       this.categoryList = data;
       for (let i = 0; i < data.length; i++) {
         this.categoryMap.set(this.categoryList[i].id, this.categoryList[i].name);
@@ -306,7 +266,7 @@ export class ShowMedicinesComponent implements OnInit {
   }
 
   StrengthMap() {
-    this.service.GetStrengthList().subscribe(data => {
+    this.service2.GetStrengthList().subscribe(data => {
       this.strengthList = data;
       for (let i = 0; i < data.length; i++) {
         this.strengthMap.set(this.strengthList[i].id, this.strengthList[i].name);

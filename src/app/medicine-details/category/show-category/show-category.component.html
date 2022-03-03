@@ -10,6 +10,7 @@
               <th style="display: none;">Id</th>
               <th>Name</th>
               <th>Description</th>
+              <th>Action</th>
           </thead>
           <tbody>
               <tr *ngFor="let item of categoryList | paginate:{
@@ -49,7 +50,7 @@
 
           <pagination-controls id='category_list_paging' (pageChange)="page=$event"></pagination-controls>
       </div>
-     
+
 
       <!-- Add form Modal -->
       <div class="modal fade" id="addcategoryModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">

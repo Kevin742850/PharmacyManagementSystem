@@ -18,6 +18,8 @@ export class AddCompanyComponent implements OnInit {
   name: string = "";
   description : string ="";
   distributionId!: number;
+  pharmacyId : number = 0;
+  pharmacyList :any;
 
 
   ngOnInit(): void {
@@ -25,6 +27,9 @@ export class AddCompanyComponent implements OnInit {
     this.name = this.company.name;
     this.description = this.company.description;
     this.distributionId = this.company.distributionId;
+    this.pharmacyId = this.company.pharmacyId;
+
+    this.pharmacyList = localStorage.getItem('pharmacyId');
 
 
     this.distributionList$ = this.Service.GetDistributionList();
@@ -34,14 +39,15 @@ export class AddCompanyComponent implements OnInit {
     {
       name: this.name,
       description : this.description,
-      distributionId : this.distributionId
+      distributionId : this.distributionId,
+      pharmacyId : this.pharmacyList
     }
     this.Service.AddCompany(company).subscribe(res => {
       var closeModalBtn = document.getElementById('add-edit-modal-close');
       if (closeModalBtn) {
         closeModalBtn.click();
       }
-      this.alert.success('Added successfulyy');
+      this.alert.success('Added successfully');
     });
   }
 
@@ -51,7 +57,8 @@ export class AddCompanyComponent implements OnInit {
       id: this.id,
       name: this.name,
       description:this.description,
-      distributionId:this.distributionId
+      distributionId:this.distributionId,
+      pharmacyId : this.pharmacyId
     }
     var id: number = this.id;
     this.Service.UpdateCompany(id, company).subscribe(res => {

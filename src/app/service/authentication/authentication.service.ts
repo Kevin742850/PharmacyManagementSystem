@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { TokenMapping } from 'src/app/login/tokenMapping';
 import { SignInData } from 'src/app/model/signInData';
 import { environment } from 'src/environments/environment';
 
@@ -10,21 +11,33 @@ import { environment } from 'src/environments/environment';
 export class AuthenticationService {
   readonly inspectionAPIURL = environment.apiURL;
   isAuth: boolean = false;
-  constructor(private http: HttpClient, private router: Router) { }
-  Authenticate(signInData: SignInData): boolean {
-    this.http.post(this.inspectionAPIURL + '/ValidUsers/', signInData).subscribe(res => {
-      if (res != null) {
-        this.isAuth = true;
+  mappedResponse: TokenMapping;
+  constructor(private http: HttpClient, private router: Router) {
+    this.mappedResponse = new TokenMapping();
 
-        localStorage.setItem('userToken', res.toString());
+  }
+  Authenticate(signInData: SignInData): boolean {
+    this.http.post(this.inspectionAPIURL + '/ValidUsers/', signInData).subscribe((data:any) => {
+      this.mappedResponse = data;
+
+      if (this.mappedResponse != null) {
+        this.isAuth = false;
+        this.mappedResponse.token=this.mappedResponse.token.replace(/['"]+/g, '');
+        localStorage.setItem('userToken', this.mappedResponse.token);
+        localStorage.setItem('pharmacyId', this.mappedResponse.pharmacyId.toString());
+        localStorage.setItem('pharmacyAddress', this.mappedResponse.pharmacyAddress);
         this.router.navigate(['showInspection']);
       }
       else {
-        this.isAuth = false;
+        this.isAuth = true;
+
       }
+
     });
-    return this.isAuth;
+    return true;
   }
+
+
 
   Logout() {
     this.isAuth = false;
@@ -35,5 +48,7 @@ export class AuthenticationService {
   getToken() {
     return localStorage.getItem('userToken');
   }
- 
+
+
+
 }

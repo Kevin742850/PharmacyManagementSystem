@@ -15,8 +15,8 @@ export class CustomerService {
     return this.http.get<any>(this.pharmacyManagementSystemAPIURL + this.controllerName);
 
   }
-  DeleteCustomer(id: number | string) {
-    return this.http.delete(this.pharmacyManagementSystemAPIURL + this.controllerName+ "/" + + id);
+  DeleteCustomer(id: number | string, pid:number | string) {
+    return this.http.delete(this.pharmacyManagementSystemAPIURL + this.controllerName+ "/" +id+pid);
   }
   AddCustomer(data: any) {
     return this.http.post(this.pharmacyManagementSystemAPIURL + this.controllerName, data);

@@ -1,7 +1,7 @@
 <form>
     <div class="mb-3">
         <label for="name" class="form-label">Name</label>
-        <input required pattern="^[a-zA-Z0-9_-' ']{0,15}$" #Name="ngModel" type="text" class="form-control" name="name" [(ngModel)]="name" />
+        <input required pattern="[a-zA-Z][a-zA-Z-_'0-9 ]+" #Name="ngModel" type="text" class="form-control" name="name" [(ngModel)]="name" />
         <div  style="color: red;" *ngIf="Name.touched && !Name.valid">
           <div *ngIf="Name.errors && Name.errors['required']"> Name is required.</div>
         </div>
@@ -57,6 +57,9 @@
         <input required #Description="ngModel" type="text" class="form-control" name="description" [(ngModel)]="description" />
         <div style="color: red;" *ngIf="Description.touched && !Description.valid">Description is required</div>
 
+    </div>
+    <div class="mb-3">
+      <input type="text" class="form-control" name="pharmacyId" value="1" [(ngModel)]="pharmacyid" style="display: none;" />
     </div>
 
     <button (click)="addCustomer()" *ngIf="customer.id==0" class="btn btn-primary"> Add</button>

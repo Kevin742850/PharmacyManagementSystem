@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AddServiceService } from 'src/app/service/add-service.service';
+import { AlertifyService } from 'src/app/service/Alertify/alertify.service';
 
 @Component({
   selector: 'app-show-strength',
@@ -15,7 +16,7 @@ export class ShowStrengthComponent implements OnInit {
   strength: any;
   totalRecords: number ;
   page: number = 1;
-  constructor(private Service: AddServiceService) {
+  constructor(private Service: AddServiceService, public alert: AlertifyService) {
     this.strengthList = new Array<any>();
     this.totalRecords=0;
   }
@@ -47,20 +48,12 @@ export class ShowStrengthComponent implements OnInit {
   }
   deletestrength(item: any) {
     if (confirm("Are you want to delete strength ?")) {
-      this.Service.DeleteStrength(item.id).subscribe(res => {
+      this.Service.DeleteStrength(item.id, item.pharmacyId).subscribe(res => {
         var closeModalBtn = document.getElementById('add-edit-modal-close');
         if (closeModalBtn) {
           closeModalBtn.click();
         }
-        var showDeleteSuccess = document.getElementById('delete-success-alert');
-        if (showDeleteSuccess) {
-          showDeleteSuccess.style.display = "block";
-        }
-        setTimeout(function () {
-          if (showDeleteSuccess) {
-            showDeleteSuccess.style.display = "none";
-          }
-        }, 4000);
+        this.alert.success('Deleted successfulyy');
         this.ngOnInit();
       });
     }

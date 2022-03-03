@@ -2,6 +2,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { InspectionServiceService } from 'src/app/inspection-service.service';
+import { AlertifyService } from 'src/app/service/Alertify/alertify.service';
 @Component({
   selector: 'app-show-inspection',
   templateUrl: './show-inspection.component.html',
@@ -14,7 +15,7 @@ export class ShowInspectionComponent implements OnInit {
 
 
   inspectionTypesMap: Map<number, string> = new Map()
-  constructor(private service: InspectionServiceService) { }
+  constructor(private service: InspectionServiceService, public alert:AlertifyService) { }
 
   ngOnInit(): void {
 
@@ -50,15 +51,7 @@ export class ShowInspectionComponent implements OnInit {
         if (closeModalBtn) {
           closeModalBtn.click();
         }
-        var showDeleteSuccess = document.getElementById('delete-success-alert');
-        if (showDeleteSuccess) {
-          showDeleteSuccess.style.display = "block";
-        }
-        setTimeout(function () {
-          if (showDeleteSuccess) {
-            showDeleteSuccess.style.display = "none";
-          }
-        }, 4000);
+        this.alert.success('Deleted successfulyy');
       this.inspectionList$ = this.service.GetInspectionList();
       });
     }

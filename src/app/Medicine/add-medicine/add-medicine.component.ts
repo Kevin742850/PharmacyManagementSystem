@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AddServiceService } from 'src/app/service/add-service.service';
+import { AlertifyService } from 'src/app/service/Alertify/alertify.service';
 import { MedicineServiceService } from 'src/app/service/medicine/medicine-service.service';
 
 @Component({
@@ -13,7 +15,7 @@ export class AddMedicineComponent implements OnInit {
   categoryList$!: Observable<any[]>;
   formList$!: Observable<any[]>;
   strengthList$!: Observable<any[]>;
-  constructor(private service: MedicineServiceService) {
+  constructor(private service: MedicineServiceService,private service2: AddServiceService, private alert: AlertifyService) {
    }
 
   @Input() medicine: any;
@@ -28,6 +30,7 @@ export class AddMedicineComponent implements OnInit {
   categoryId!: number;
   formId!: number;
   strengthId!: number;
+  pharmacyId : number = 0;
 
 
   ngOnInit(): void {
@@ -43,11 +46,12 @@ export class AddMedicineComponent implements OnInit {
     this.formId = this.medicine.formId;
     this.strengthId = this.medicine.strengthId;
     this.isControlDrug = this.medicine.isControlDrug;
+    this.pharmacyId = this.medicine.pharmacyId
     //this all are for retrive data from db dropdown menu
-    this.companyList$ = this.service.GetCompanyList();
-    this.categoryList$ = this.service.GetCategoryList();
-    this.formList$ = this.service.GetFormList();
-    this.strengthList$ = this.service.GetStrengthList();
+    this.companyList$ = this.service2.GetCompanyList();
+    this.categoryList$ = this.service2.GetCategoryList();
+    this.formList$ = this.service2.GetFormList();
+    this.strengthList$ = this.service2.GetStrengthList();
   }
 
 
@@ -63,6 +67,7 @@ export class AddMedicineComponent implements OnInit {
     this.formId = form.formId;
     this.strengthId = form.strengthId;
     this.isControlDrug = form.isControlDrug;
+    this.pharmacyId = form.pharmacyId;
   }
 
   addMedicine() {
@@ -77,23 +82,15 @@ export class AddMedicineComponent implements OnInit {
       categoryId: this.categoryId,
       formId: this.formId,
       strengthId: this.strengthId,
-      isControlDrug: this.isControlDrug
+      isControlDrug: this.isControlDrug,
+      pharmacyId : this.pharmacyId
     }
     this.service.AddMedicine(medicine).subscribe(res => {
       var closeModalBtn = document.getElementById('add-edit-modal-close');
       if (closeModalBtn) {
         closeModalBtn.click();
       }
-      var showAddSuccess = document.getElementById('add-success-alert');
-      if (showAddSuccess) {
-        showAddSuccess.style.display = "block";
-      }
-      setTimeout(function () {
-        if (showAddSuccess) {
-          showAddSuccess.style.display = "none";
-        }
-
-      }, 4000);
+      this.alert.success('Added successfulyy');
     });
 
   }
@@ -111,7 +108,8 @@ export class AddMedicineComponent implements OnInit {
       categoryId: this.categoryId,
       formId: this.formId,
       strengthId: this.strengthId,
-      isControlDrug: this.isControlDrug
+      isControlDrug: this.isControlDrug,
+      pharmacyId : this.pharmacyId
 
     }
     var id: number = this.id;
@@ -120,16 +118,7 @@ export class AddMedicineComponent implements OnInit {
       if (closeModalBtn) {
         closeModalBtn.click();
       }
-      var showUpdateSuccess = document.getElementById('update-success-alert');
-      if (showUpdateSuccess) {
-        showUpdateSuccess.style.display = "block";
-      }
-      setTimeout(function () {
-        if (showUpdateSuccess) {
-          showUpdateSuccess.style.display = "none";
-        }
-
-      }, 4000);
+      this.alert.success('Updated successfulyy');
     });
 
   }

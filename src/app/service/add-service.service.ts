@@ -56,9 +56,9 @@ return this.http.post(this.APIURL+'/Categories',data);
   {
     return this.http.put(this.APIURL+'/Categories/'+id,data);
   }
-  DeleteCategory(id:number|string)
+  DeleteCategory(id:number|string,pid:number)
 {
-return this.http.delete(this.APIURL+'/Categories/'+id);
+return this.http.delete(this.APIURL+'/Categories/'+id+pid);
 }
 
 
@@ -101,9 +101,9 @@ return this.http.delete(this.APIURL+'/Categories/'+id);
   {
     return this.http.put(this.APIURL+'/Strengths/'+id,data);
   }
-   DeleteStrength(id:number|string)
+   DeleteStrength(id:number|string, pid:number)
   {
-   return this.http.delete(this.APIURL+'/Strengths/'+id);
+   return this.http.delete(this.APIURL+'/Strengths/'+id+pid);
   }
 
 

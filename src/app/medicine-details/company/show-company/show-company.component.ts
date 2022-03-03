@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AddServiceService } from 'src/app/service/add-service.service';
+import { AlertifyService } from 'src/app/service/Alertify/alertify.service';
 
 @Component({
   selector: 'app-show-company',
@@ -22,7 +23,7 @@ export class ShowCompanyComponent implements OnInit {
 
   distributionMap: Map<number, string> = new Map()
 
-  constructor(private Service: AddServiceService) {
+  constructor(private Service: AddServiceService, public alert:AlertifyService) {
     this.companyList = new Array<any>();
     this.totalRecords=0;
   }
@@ -62,15 +63,7 @@ export class ShowCompanyComponent implements OnInit {
         if (closeModalBtn) {
           closeModalBtn.click();
         }
-        var showDeleteSuccess = document.getElementById('delete-success-alert');
-        if (showDeleteSuccess) {
-          showDeleteSuccess.style.display = "block";
-        }
-        setTimeout(function () {
-          if (showDeleteSuccess) {
-            showDeleteSuccess.style.display = "none";
-          }
-        }, 4000);
+        this.alert.success('Deleted successfulyy');
         this.ngOnInit();
       });
     }
